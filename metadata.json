@@ -1,0 +1,6 @@
+{
+  "name": "BKK SMK PGRI 1 Taman - Portal Bursa Kerja Khusus & Penempatan Alumni",
+  "description": "Sistem informasi Bursa Kerja Khusus (BKK) SMK PGRI 1 Taman berbasis Firebase Authentication dan Cloud Firestore untuk alumni, pencari kerja, perusahaan mitra, dan admin sekolah.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,224 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role-based access information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "enum": ["admin", "operator", "company", "user"] },
+        "status": { "type": "string", "enum": ["active", "blocked"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "role", "status"]
+    },
+    "PencariKerja": {
+      "title": "PencariKerja",
+      "description": "Job seeker and alumni profile details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "namaLengkap": { "type": "string", "maxLength": 150 },
+        "jenisKelamin": { "type": "string", "enum": ["L", "P"] },
+        "tempatLahir": { "type": "string", "maxLength": 100 },
+        "tanggalLahir": { "type": "string" },
+        "noHp": { "type": "string", "maxLength": 30 },
+        "alamat": { "type": "string", "maxLength": 500 },
+        "desa": { "type": "string", "maxLength": 100 },
+        "kecamatan": { "type": "string", "maxLength": 100 },
+        "kabupaten": { "type": "string", "maxLength": 100 },
+        "provinsi": { "type": "string", "maxLength": 100 },
+        "kodePos": { "type": "string", "maxLength": 20 },
+        "tahunLulus": { "type": "string", "maxLength": 10 },
+        "jurusan": { "type": "string", "maxLength": 100 },
+        "bio": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "maxLength": 30 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "namaLengkap"]
+    },
+    "Perusahaan": {
+      "title": "Perusahaan",
+      "description": "Company partner profile details and verification state",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "namaPerusahaan": { "type": "string", "maxLength": 150 },
+        "bidangUsaha": { "type": "string", "maxLength": 150 },
+        "deskripsi": { "type": "string", "maxLength": 2000 },
+        "alamat": { "type": "string", "maxLength": 500 },
+        "kabupaten": { "type": "string", "maxLength": 100 },
+        "provinsi": { "type": "string", "maxLength": 100 },
+        "website": { "type": "string", "maxLength": 200 },
+        "email": { "type": "string", "maxLength": 100 },
+        "noTelepon": { "type": "string", "maxLength": 50 },
+        "namaPic": { "type": "string", "maxLength": 100 },
+        "jabatanPic": { "type": "string", "maxLength": 100 },
+        "statusVerifikasi": { "type": "string", "enum": ["pending", "verified", "rejected", "blocked"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "namaPerusahaan", "statusVerifikasi"]
+    },
+    "Kategori": {
+      "title": "Kategori",
+      "description": "Job category entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nama": { "type": "string", "maxLength": 100 },
+        "slug": { "type": "string", "maxLength": 100 },
+        "status": { "type": "boolean" }
+      },
+      "required": ["id", "nama", "slug"]
+    },
+    "Lowongan": {
+      "title": "Lowongan",
+      "description": "Job vacancy posted by partner companies",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "perusahaanId": { "type": "string" },
+        "kategoriId": { "type": "string" },
+        "judul": { "type": "string", "maxLength": 200 },
+        "slug": { "type": "string", "maxLength": 200 },
+        "deskripsi": { "type": "string", "maxLength": 5000 },
+        "persyaratan": { "type": "string", "maxLength": 5000 },
+        "lokasi": { "type": "string", "maxLength": 200 },
+        "jenisPekerjaan": { "type": "string", "enum": ["full_time", "part_time", "contract", "internship", "freelance"] },
+        "pendidikanMinimal": { "type": "string", "maxLength": 100 },
+        "jurusan": { "type": "string", "maxLength": 150 },
+        "pengalamanMinimal": { "type": "string", "maxLength": 150 },
+        "usiaMinimal": { "type": "number" },
+        "usiaMaksimal": { "type": "number" },
+        "gajiMinimal": { "type": "number" },
+        "gajiMaksimal": { "type": "number" },
+        "jumlahKebutuhan": { "type": "number" },
+        "tanggalBuka": { "type": "string" },
+        "tanggalTutup": { "type": "string" },
+        "kontak": { "type": "string", "maxLength": 150 },
+        "status": { "type": "string", "enum": ["draft", "pending", "published", "closed", "rejected"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "perusahaanId", "kategoriId", "judul", "status"]
+    },
+    "Lamaran": {
+      "title": "Lamaran",
+      "description": "Job application submitted by an applicant",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "lowonganId": { "type": "string" },
+        "pencariKerjaId": { "type": "string" },
+        "userId": { "type": "string" },
+        "coverLetter": { "type": "string", "maxLength": 2000 },
+        "status": { "type": "string", "enum": ["diajukan", "dilihat", "seleksi_administrasi", "lulus_administrasi", "tidak_lulus", "dipanggil_interview", "interview", "diterima", "ditolak", "dibatalkan"] },
+        "catatan": { "type": "string", "maxLength": 1000 },
+        "tanggalLamar": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "lowonganId", "pencariKerjaId", "userId", "status"]
+    },
+    "Agenda": {
+      "title": "Agenda",
+      "description": "Event and recruitment agenda schedule",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "judul": { "type": "string", "maxLength": 200 },
+        "slug": { "type": "string", "maxLength": 200 },
+        "deskripsi": { "type": "string", "maxLength": 3000 },
+        "tanggalMulai": { "type": "string" },
+        "tanggalSelesai": { "type": "string" },
+        "lokasi": { "type": "string", "maxLength": 200 },
+        "penyelenggara": { "type": "string", "maxLength": 150 },
+        "status": { "type": "string", "enum": ["draft", "published", "closed"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "judul", "tanggalMulai", "status"]
+    },
+    "Pengumuman": {
+      "title": "Pengumuman",
+      "description": "Announcement bulletin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "judul": { "type": "string", "maxLength": 200 },
+        "slug": { "type": "string", "maxLength": 200 },
+        "isi": { "type": "string", "maxLength": 5000 },
+        "status": { "type": "string", "enum": ["draft", "published"] },
+        "publishedAt": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "judul", "isi", "status"]
+    },
+    "Notifikasi": {
+      "title": "Notifikasi",
+      "description": "User notification item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "judul": { "type": "string", "maxLength": 200 },
+        "pesan": { "type": "string", "maxLength": 1000 },
+        "url": { "type": "string", "maxLength": 200 },
+        "dibacaAt": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "judul", "pesan"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles and role assignments"
+    },
+    "/pencariKerja/{pkId}": {
+      "schema": { "$ref": "#/entities/PencariKerja" },
+      "description": "Pencari kerja curriculum vitae and personal profile records"
+    },
+    "/perusahaan/{prsId}": {
+      "schema": { "$ref": "#/entities/Perusahaan" },
+      "description": "Corporate partner profiles"
+    },
+    "/kategori/{kategoriId}": {
+      "schema": { "$ref": "#/entities/Kategori" },
+      "description": "Employment job categories"
+    },
+    "/lowongan/{lowonganId}": {
+      "schema": { "$ref": "#/entities/Lowongan" },
+      "description": "Job vacancies listing"
+    },
+    "/lamaran/{lamaranId}": {
+      "schema": { "$ref": "#/entities/Lamaran" },
+      "description": "Job applications submitted by candidates"
+    },
+    "/agenda/{agendaId}": {
+      "schema": { "$ref": "#/entities/Agenda" },
+      "description": "Institutional events, test schedules, and job fair agendas"
+    },
+    "/pengumuman/{pengumumanId}": {
+      "schema": { "$ref": "#/entities/Pengumuman" },
+      "description": "Public announcements and bulletin notices"
+    },
+    "/notifikasi/{notifId}": {
+      "schema": { "$ref": "#/entities/Notifikasi" },
+      "description": "User personalized system notifications"
+    },
+    "/penempatan/{penempatanId}": {
+      "schema": "object",
+      "description": "Placement tracking records for alumni"
+    },
+    "/auditLog/{logId}": {
+      "schema": "object",
+      "description": "Administrative audit trail logs"
+    },
+    "/settings/general": {
+      "schema": "object",
+      "description": "General system site settings"
+    }
+  }
+}

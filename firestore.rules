@@ -1,0 +1,117 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'gukarabsensi@gmail.com' ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'operator'])
+      );
+    }
+
+    // Connection test document
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    // Pencari Kerja profiles
+    match /pencariKerja/{pkId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Perusahaan profiles
+    match /perusahaan/{prsId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Kategori lowongan
+    match /kategori/{katId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Lowongan kerja
+    match /lowongan/{lowId} {
+      allow read: if true;
+      allow create, update: if isSignedIn();
+      allow delete: if isSignedIn();
+    }
+
+    // Lamaran kerja
+    match /lamaran/{lamId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn();
+      allow delete: if isSignedIn();
+    }
+
+    // Riwayat status lamaran
+    match /riwayat/{riwId} {
+      allow read, create: if isSignedIn();
+      allow update, delete: if isSignedIn();
+    }
+
+    // Agenda kegiatan
+    match /agenda/{agendaId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Pengumuman
+    match /pengumuman/{pngId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Notifikasi pengguna
+    match /notifikasi/{notifId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Penempatan kerja alumni
+    match /penempatan/{penId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Audit log
+    match /auditLog/{logId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Pengaturan situs
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Riwayat Broadcast Notifikasi
+    match /broadcasts/{broadcastId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Galeri Foto & Video Dokumentasi Kegiatan (Publik)
+    match /galeri/{mediaId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+  }
+}
