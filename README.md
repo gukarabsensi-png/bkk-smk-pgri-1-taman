@@ -152,3 +152,4 @@ Ikuti langkah-langkah mudah berikut untuk mengunggah proyek ini ke akun GitHub A
 
 Dikembangkan untuk **SMK PGRI 1 Taman, Sidoarjo, Jawa Timur**.
 Mendukung kemajuan pendidikan vokasi dan keterserapan alumni di Dunia Usaha & Dunia Industri.
+
